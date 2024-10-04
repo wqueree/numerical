@@ -11,8 +11,7 @@ private:
 public:
     Matrix(std::array<T, M * N>& elements);
     Matrix(std::array<T, M * N>&& elements);
-    
-    Matrix<T, N, M> transpose();
+
     std::string to_string();
 };
 
