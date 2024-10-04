@@ -12,6 +12,7 @@ public:
     Matrix(std::array<T, M * N>& elements);
     Matrix(std::array<T, M * N>&& elements);
 
+    T operator()(std::size_t row, std::size_t col);
     std::string to_string();
 };
 
@@ -24,6 +25,12 @@ Matrix<T, M, N>::Matrix(std::array<T, M * N>& elements)
 template <typename T, std::size_t M, std::size_t N>
 Matrix<T, M, N>::Matrix(std::array<T, M * N>&& elements)
     : elements_{elements} {}
+
+
+template <typename T, std::size_t M, std::size_t N>
+T Matrix<T, M, N>::operator()(std::size_t row, std::size_t col) {
+    return elements_[(row - 1) * N + col - 1];
+}
 
 
 template <typename T, std::size_t M, std::size_t N>
