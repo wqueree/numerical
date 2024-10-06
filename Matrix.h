@@ -1,6 +1,8 @@
 #include <array>
 #include <string>
 #include <memory>
+#include <cmath>
+#include <limits>
 
 
 template <typename T, std::size_t M, std::size_t N>
@@ -14,6 +16,7 @@ public:
     Matrix(const std::array<std::array<T, N>, M>&& elements);
 
     T& operator()(const std::size_t row, const std::size_t col);
+    bool operator==(const Matrix<T, M, N>& matrix);
     Matrix<T, M, N> operator+(const Matrix<T, M, N>& matrix);
     Matrix<T, M, N> operator-(const Matrix<T, M, N>& matrix);
 
@@ -46,6 +49,17 @@ T& Matrix<T, M, N>::operator()(std::size_t row, std::size_t col) {
     return elements_[row - 1][col - 1];
 }
 
+
+template <typename T, std::size_t M, std::size_t N>
+bool Matrix<T, M, N>::operator==(const Matrix<T, M, N>& matrix) {
+    for (size_t i = 0; i < M; ++i) {
+        for (size_t j = 0; j < N; ++j) {
+            if (fabs(elements_[i][j] - matrix.elements_[i][j]) > std::numeric_limits<T>::epsilon())
+                return false;
+        }
+    }
+    return true;
+}
 
 template <typename T, std::size_t M, std::size_t N>
 Matrix<T, M, N> Matrix<T, M, N>::operator+(const Matrix<T, M, N>& matrix) {
