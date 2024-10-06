@@ -2,16 +2,25 @@
 #include "Matrix.h"
 
 int main () {
-    std::array<std::array<double, 3>, 3> nums {{
+    std::array<std::array<double, 3>, 5> am1 {{
         {1, 2, 3},
-        {4, 50000, 6},
-        {0.0007, 8, 9}
+        {4, 5, 6},
+        {7, 8, 9},
+        {1, 2, 3},
+        {4, 5, 6}
     }};
-    Matrix<double, 3, 3> m {std::move(nums)};
-    std::cout << m.to_string() << std::endl;
-    std::cout << m(2, 2) << std::endl;
 
-    auto m2 = m - m;
-    std::cout << m2.to_string() << std::endl;
+    Matrix<double, 5, 3> m1 {std::move(am1)};
+
+    std::array<std::array<double, 4>, 3> am2 {{
+        {1, 2, 3, 4},
+        {5, 6, 7, 8},
+        {9, 1, 2, 3}
+    }};
+
+    Matrix<double, 3, 4> m2 {std::move(am2)};
+
+    std::cout << (m1 * m2).to_string() << std::endl;
+
     return 0;
 }

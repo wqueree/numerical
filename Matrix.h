@@ -17,6 +17,9 @@ public:
     Matrix<T, M, N> operator+(const Matrix<T, M, N>& matrix);
     Matrix<T, M, N> operator-(const Matrix<T, M, N>& matrix);
 
+    template <typename _T, std::size_t _M, std::size_t _N, std::size_t _P>
+    friend Matrix<_T, _M, _P> operator*(const Matrix<_T, _M, _N>& a, const Matrix<_T, _N, _P>& b);
+
     Matrix<T, N, M> transpose();
     std::string to_string();
 };
@@ -66,6 +69,23 @@ Matrix<T, M, N> Matrix<T, M, N>::operator-(const Matrix<T, M, N>& matrix) {
     }
     Matrix<T, M, N> sum {std::move(sum_array)};
     return sum;
+}
+
+
+template <typename _T, std::size_t _M, std::size_t _N, std::size_t _P>
+Matrix<_T, _M, _P> operator*(const Matrix<_T, _M, _N>& a, const Matrix<_T, _N, _P>& b) {
+    std::array<std::array<_T, _P>, _M> product_array {};
+    for (size_t i = 0; i < _M; ++i) {
+        for (size_t j = 0; j < _P; ++j) {
+            _T dot_product = 0;
+            for (size_t k = 0; k < _N; ++k) {
+                dot_product += a.elements_[i][k] * b.elements_[k][j];
+            }
+            product_array[i][j] = dot_product;
+        }
+    }
+    Matrix<_T, _M, _P> product {std::move(product_array)};
+    return product;
 }
 
 
