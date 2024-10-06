@@ -11,7 +11,7 @@ int main () {
     std::cout << m.to_string() << std::endl;
     std::cout << m(2, 2) << std::endl;
 
-    auto m2 = m.transpose();
+    auto m2 = m + m;
     std::cout << m2.to_string() << std::endl;
     return 0;
 }

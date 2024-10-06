@@ -10,10 +10,11 @@ private:
 
 public:
     Matrix();
-    Matrix(std::array<std::array<T, N>, M>& elements);
-    Matrix(std::array<std::array<T, N>, M>&& elements);
+    Matrix(const std::array<std::array<T, N>, M>& elements);
+    Matrix(const std::array<std::array<T, N>, M>&& elements);
 
-    T& operator()(std::size_t row, std::size_t col);
+    T& operator()(const std::size_t row, const std::size_t col);
+    Matrix<T, M, N> operator+(const Matrix<T, M, N>& matrix);
 
     Matrix<T, N, M> transpose();
     std::string to_string();
@@ -26,18 +27,31 @@ Matrix<T, M, N>::Matrix()
 
 
 template <typename T, std::size_t M, std::size_t N>
-Matrix<T, M, N>::Matrix(std::array<std::array<T, N>, M>& elements)
+Matrix<T, M, N>::Matrix(const std::array<std::array<T, N>, M>& elements)
     : elements_{elements} {}
 
 
 template <typename T, std::size_t M, std::size_t N>
-Matrix<T, M, N>::Matrix(std::array<std::array<T, N>, M>&& elements)
+Matrix<T, M, N>::Matrix(const std::array<std::array<T, N>, M>&& elements)
     : elements_{elements} {}
 
 
 template <typename T, std::size_t M, std::size_t N>
 T& Matrix<T, M, N>::operator()(std::size_t row, std::size_t col) {
     return elements_[row - 1][col - 1];
+}
+
+
+template <typename T, std::size_t M, std::size_t N>
+Matrix<T, M, N> Matrix<T, M, N>::operator+(const Matrix<T, M, N>& matrix) {
+    std::array<std::array<T, N>, M> sum_array {};
+    for (size_t i = 0; i < M; ++i) {
+        for (size_t j = 0; j < N; ++j) {
+            sum_array[i][j] = elements_[i][j] + matrix.elements_[i][j];
+        }
+    }
+    Matrix<T, M, N> sum {std::move(sum_array)};
+    return sum;
 }
 
 
@@ -49,7 +63,7 @@ Matrix<T, N, M> Matrix<T, M, N>::transpose() {
             transpose_array[j][i] = elements_[i][j];
         }
     }
-    Matrix<T, N, M> _transpose {transpose_array};
+    Matrix<T, N, M> _transpose {std::move(transpose_array)};
     return _transpose;
 }
 
