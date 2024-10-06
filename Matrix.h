@@ -57,8 +57,8 @@ Matrix<T, N, M> Matrix<T, M, N>::transpose() {
 template <typename T, std::size_t M, std::size_t N>
 std::string Matrix<T, M, N>::to_string() {
     std::string result {};
-    const size_t format_buffer_size = 8;
-    const std::string format_string {"%lf"};
+    const size_t format_buffer_size = 16;
+    const std::string format_string {"%.3e"};
     for (size_t i = 0; i < M; ++i) {
         for (size_t j = 0; j < N; ++j) {
             std::unique_ptr<char[]> element_format_buffer = std::make_unique<char[]>(format_buffer_size);
