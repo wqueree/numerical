@@ -15,6 +15,7 @@ public:
 
     T& operator()(const std::size_t row, const std::size_t col);
     Matrix<T, M, N> operator+(const Matrix<T, M, N>& matrix);
+    Matrix<T, M, N> operator-(const Matrix<T, M, N>& matrix);
 
     Matrix<T, N, M> transpose();
     std::string to_string();
@@ -48,6 +49,19 @@ Matrix<T, M, N> Matrix<T, M, N>::operator+(const Matrix<T, M, N>& matrix) {
     for (size_t i = 0; i < M; ++i) {
         for (size_t j = 0; j < N; ++j) {
             sum_array[i][j] = elements_[i][j] + matrix.elements_[i][j];
+        }
+    }
+    Matrix<T, M, N> sum {std::move(sum_array)};
+    return sum;
+}
+
+
+template <typename T, std::size_t M, std::size_t N>
+Matrix<T, M, N> Matrix<T, M, N>::operator-(const Matrix<T, M, N>& matrix) {
+    std::array<std::array<T, N>, M> sum_array {};
+    for (size_t i = 0; i < M; ++i) {
+        for (size_t j = 0; j < N; ++j) {
+            sum_array[i][j] = elements_[i][j] - matrix.elements_[i][j];
         }
     }
     Matrix<T, M, N> sum {std::move(sum_array)};
