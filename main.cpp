@@ -20,7 +20,8 @@ int main () {
 
     Matrix<double, 3, 4> m2 {std::move(am2)};
 
-    std::cout << (m1 * m2).to_string() << std::endl;
+    auto m3 = m1 * m2;
+    std::cout << m3.to_string() << std::endl;
 
     return 0;
 }

@@ -21,6 +21,7 @@ public:
     friend Matrix<_T, _M, _P> operator*(const Matrix<_T, _M, _N>& a, const Matrix<_T, _N, _P>& b);
 
     Matrix<T, N, M> transpose();
+    bool square();
     std::string to_string();
 };
 
@@ -32,12 +33,12 @@ Matrix<T, M, N>::Matrix()
 
 template <typename T, std::size_t M, std::size_t N>
 Matrix<T, M, N>::Matrix(const std::array<std::array<T, N>, M>& elements)
-    : elements_{elements} {}
+    : elements_{std::move(elements)} {}
 
 
 template <typename T, std::size_t M, std::size_t N>
 Matrix<T, M, N>::Matrix(const std::array<std::array<T, N>, M>&& elements)
-    : elements_{elements} {}
+    : elements_{std::move(elements)} {}
 
 
 template <typename T, std::size_t M, std::size_t N>
@@ -48,57 +49,60 @@ T& Matrix<T, M, N>::operator()(std::size_t row, std::size_t col) {
 
 template <typename T, std::size_t M, std::size_t N>
 Matrix<T, M, N> Matrix<T, M, N>::operator+(const Matrix<T, M, N>& matrix) {
-    std::array<std::array<T, N>, M> sum_array {};
+    Matrix<T, M, N> sum;
     for (size_t i = 0; i < M; ++i) {
         for (size_t j = 0; j < N; ++j) {
-            sum_array[i][j] = elements_[i][j] + matrix.elements_[i][j];
+            sum.elements_[i][j] = elements_[i][j] + matrix.elements_[i][j];
         }
     }
-    Matrix<T, M, N> sum {std::move(sum_array)};
     return sum;
 }
 
 
 template <typename T, std::size_t M, std::size_t N>
 Matrix<T, M, N> Matrix<T, M, N>::operator-(const Matrix<T, M, N>& matrix) {
+    Matrix<T, M, N> sum;
     std::array<std::array<T, N>, M> sum_array {};
     for (size_t i = 0; i < M; ++i) {
         for (size_t j = 0; j < N; ++j) {
-            sum_array[i][j] = elements_[i][j] - matrix.elements_[i][j];
+            sum.elements_[i][j] = elements_[i][j] - matrix.elements_[i][j];
         }
     }
-    Matrix<T, M, N> sum {std::move(sum_array)};
     return sum;
 }
 
 
 template <typename _T, std::size_t _M, std::size_t _N, std::size_t _P>
 Matrix<_T, _M, _P> operator*(const Matrix<_T, _M, _N>& a, const Matrix<_T, _N, _P>& b) {
-    std::array<std::array<_T, _P>, _M> product_array {};
+    Matrix<_T, _M, _P> product;
     for (size_t i = 0; i < _M; ++i) {
         for (size_t j = 0; j < _P; ++j) {
             _T dot_product = 0;
             for (size_t k = 0; k < _N; ++k) {
                 dot_product += a.elements_[i][k] * b.elements_[k][j];
             }
-            product_array[i][j] = dot_product;
+            product.elements_[i][j] = dot_product;
         }
     }
-    Matrix<_T, _M, _P> product {std::move(product_array)};
     return product;
 }
 
 
 template <typename T, std::size_t M, std::size_t N>
 Matrix<T, N, M> Matrix<T, M, N>::transpose() {
-    std::array<std::array<T, M>, N> transpose_array {};
+    Matrix<T, N, M> _transpose;
     for (size_t i = 0; i < M; ++i) {
         for (size_t j = 0; j < N; ++j) {
-            transpose_array[j][i] = elements_[i][j];
+            _transpose.elements_[j][i] = elements_[i][j];
         }
     }
-    Matrix<T, N, M> _transpose {std::move(transpose_array)};
     return _transpose;
+}
+
+
+template <typename T, std::size_t M, std::size_t N>
+bool Matrix<T, M, N>::square() {
+    return M == N;
 }
 
 
