@@ -3,6 +3,7 @@
 #include <memory>
 #include <cmath>
 #include <limits>
+#include <iomanip>
 
 
 template <typename T, std::size_t M, std::size_t N>
@@ -122,19 +123,16 @@ bool Matrix<T, M, N>::square() {
 
 template <typename T, std::size_t M, std::size_t N>
 std::string Matrix<T, M, N>::to_string() {
-    std::string result {};
-    const size_t format_buffer_size = 16;
-    const std::string format_string {"%.3e"};
+    std::ostringstream result;
+    result << std::fixed << std::setprecision(3);
     for (size_t i = 0; i < M; ++i) {
         for (size_t j = 0; j < N; ++j) {
-            std::unique_ptr<char[]> element_format_buffer = std::make_unique<char[]>(format_buffer_size);
-            std::snprintf(element_format_buffer.get(), format_buffer_size, format_string.c_str(), elements_[i][j]);
-            result.append(std::string(element_format_buffer.get()));
+            result << std::scientific << elements_[i][j];
             if (j < N - 1)
-                result.append(" ");
+                result << " ";
         }
         if (i < M - 1)
-            result.append("\n");
+            result << "\n";
     }
-    return result;
+    return result.str();
 }

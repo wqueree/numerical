@@ -31,7 +31,7 @@ int main () {
     Matrix<double, 3, 4> m2 {std::move(am2)};
 
     auto m3 = m1 * m2;
-    std::cout << (m0 == m1) << std::endl;
+    std::cout << m3.to_string() << std::endl;
 
     return 0;
 }
