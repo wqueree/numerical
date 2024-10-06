@@ -9,12 +9,20 @@ private:
     std::array<std::array<T, N>, M> elements_;
 
 public:
+    Matrix();
     Matrix(std::array<std::array<T, N>, M>& elements);
     Matrix(std::array<std::array<T, N>, M>&& elements);
 
-    T operator()(std::size_t row, std::size_t col);
+    T& operator()(std::size_t row, std::size_t col);
+
+    Matrix<T, N, M> transpose();
     std::string to_string();
 };
+
+
+template <typename T, std::size_t M, std::size_t N>
+Matrix<T, M, N>::Matrix()
+    : elements_{} {}
 
 
 template <typename T, std::size_t M, std::size_t N>
@@ -28,8 +36,21 @@ Matrix<T, M, N>::Matrix(std::array<std::array<T, N>, M>&& elements)
 
 
 template <typename T, std::size_t M, std::size_t N>
-T Matrix<T, M, N>::operator()(std::size_t row, std::size_t col) {
+T& Matrix<T, M, N>::operator()(std::size_t row, std::size_t col) {
     return elements_[row - 1][col - 1];
+}
+
+
+template <typename T, std::size_t M, std::size_t N>
+Matrix<T, N, M> Matrix<T, M, N>::transpose() {
+    std::array<std::array<T, M>, N> transpose_array {};
+    for (size_t i = 0; i < M; ++i) {
+        for (size_t j = 0; j < N; ++j) {
+            transpose_array[j][i] = elements_[i][j];
+        }
+    }
+    Matrix<T, N, M> _transpose {transpose_array};
+    return _transpose;
 }
 
 
