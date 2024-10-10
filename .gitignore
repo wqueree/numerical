@@ -34,3 +34,4 @@
 *.s
 
 .vscode/
+scratch.cpp
