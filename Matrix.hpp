@@ -14,17 +14,21 @@ class Matrix {
 private:
     std::array<std::array<T, N>, M> elements_;
 
+
 public:
     constexpr Matrix()
-        : elements_{} {}
+        : elements_{} 
+    {}
 
 
     constexpr Matrix(const std::array<std::array<T, N>, M>& elements)
-        : elements_{std::move(elements)} {}
+        : elements_{elements}
+    {}
 
 
     constexpr Matrix(const std::array<std::array<T, N>, M>&& elements)
-        : elements_{std::move(elements)} {}
+        : elements_{std::move(elements)}
+    {}
 
 
     T& operator()(std::size_t row, std::size_t col) {
