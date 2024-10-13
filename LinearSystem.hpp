@@ -11,6 +11,12 @@ private:
 
 
 public:
+    constexpr LinearSystem()
+        : A_{}
+        , b_{}
+    {}
+
+
     constexpr LinearSystem(const Matrix<T, V, V>& A, const Matrix<T, V, 1>& b)
         : A_{A}
         , b_{b}
