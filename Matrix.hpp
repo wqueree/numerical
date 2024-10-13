@@ -9,7 +9,7 @@
 #include <type_traits>
 
 
-template <typename T, std::size_t M, std::size_t N, typename = typename std::enable_if<std::is_floating_point<T>::value>::type>
+template <typename T, std::size_t M, std::size_t N, typename E = typename std::enable_if<std::is_floating_point<T>::value>::type>
 class Matrix {
 private:
     std::array<std::array<T, N>, M> elements_;
