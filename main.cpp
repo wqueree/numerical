@@ -32,7 +32,7 @@ int main () {
 
     Matrix<double, 3, 4> m2 {std::move(am2)};
 
-    auto m3 = m1 * m2;
+    // auto m3 = m1 * m2;
     // std::cout << m3.to_string() << std::endl;
 
     std::array<std::array<double, 2>, 2> am4 {{
@@ -43,7 +43,7 @@ int main () {
 
     Matrix<double, 2, 2> m4 {std::move(am4)};
 
-    std::cout << m4.determinant() << std::endl;
+    // std::cout << m4.determinant() << std::endl;
 
     auto m5 { m4.transpose() };
 
