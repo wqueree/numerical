@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <string>
 #include <memory>
@@ -7,6 +8,7 @@
 #include <limits>
 #include <iomanip>
 #include <type_traits>
+#include <unordered_map>
 
 
 template <typename T, std::size_t M, std::size_t N, typename E = typename std::enable_if<std::is_floating_point<T>::value>::type>
@@ -105,6 +107,17 @@ public:
             }
         }
         return _transpose;
+    }
+
+
+    constexpr void permute(std::array<T, M> permutation) {
+        std::size_t swaps = 0;
+        std::size_t next = 0;
+        while (swaps < M - 1) {
+            std::swap(elements_[next], elements_[permutation[next]]);
+            next = permutation[next];
+            ++swaps;
+        }
     }
 
 
