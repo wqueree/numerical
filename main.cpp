@@ -43,13 +43,13 @@ int main () {
 
     Matrix<double, 3, 2> m4 {std::move(am4)};
 
-    std::cout << m4.to_string() << std::endl;
+    // std::cout << m4.to_string() << std::endl;
 
     // auto m5 { m4.transpose() };
 
     m4.permute(std::array<double, 3> {2, 0, 1});
 
-    std::cout << m4.to_string() << std::endl;
-
+    std::cout << Matrix<double, 3, 3>::identity().to_string() << std::endl;
+    
     return 0;
 }

@@ -19,7 +19,7 @@ private:
 
 public:
     constexpr Matrix()
-        : elements_{} 
+        : elements_{{}} 
     {}
 
 
@@ -31,6 +31,15 @@ public:
     constexpr Matrix(std::array<std::array<T, N>, M>&& elements)
         : elements_{std::move(elements)}
     {}
+
+
+    template <typename _T = T, std::size_t _M = M, std::size_t _N = N>
+    constexpr static typename std::enable_if<_M == _N, Matrix<_T, _M, _N>>::type identity() {
+        Matrix<T, M, N> _identity;
+        for (size_t i = 0; i < M; ++i)
+            _identity(i, i) = 1.0;
+        return _identity;
+    }
 
 
     T& operator()(std::size_t row, std::size_t col) {
@@ -46,7 +55,7 @@ public:
     constexpr bool operator==(const Matrix<T, M, N>& other) {
         for (size_t i = 0; i < M; ++i) {
             for (size_t j = 0; j < N; ++j) {
-                if (fabs(elements_[i][j] - other.elements_[i][j]) > std::numeric_limits<T>::epsilon())
+                if (fabs((*this)(i, j) - other(i, j)) > std::numeric_limits<T>::epsilon())
                     return false;
             }
         }
@@ -58,7 +67,7 @@ public:
         Matrix<T, M, N> sum;
         for (size_t i = 0; i < M; ++i) {
             for (size_t j = 0; j < N; ++j) {
-                sum.elements_[i][j] = elements_[i][j] + other.elements_[i][j];
+                sum(i, j) = (*this)(i, j) + other(i, j);
             }
         }
         return sum;
@@ -70,7 +79,7 @@ public:
         std::array<std::array<T, N>, M> sum_array {};
         for (size_t i = 0; i < M; ++i) {
             for (size_t j = 0; j < N; ++j) {
-                sum.elements_[i][j] = elements_[i][j] - other.elements_[i][j];
+                sum(i, j) = (*this)(i, j) - other(i, j);
             }
         }
         return sum;
@@ -103,7 +112,7 @@ public:
         Matrix<T, N, M> _transpose;
         for (size_t i = 0; i < M; ++i) {
             for (size_t j = 0; j < N; ++j) {
-                _transpose.elements_[j][i] = elements_[i][j];
+                _transpose(j, i) = (*this)(i, j);
             }
         }
         return _transpose;
@@ -131,7 +140,7 @@ public:
         result << std::fixed << std::setprecision(3);
         for (size_t i = 0; i < M; ++i) {
             for (size_t j = 0; j < N; ++j) {
-                result << std::scientific << elements_[i][j];
+                result << std::scientific << (*this)(i, j);
                 if (j < N - 1)
                     result << " ";
             }
