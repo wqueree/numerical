@@ -28,7 +28,7 @@ public:
     {}
 
 
-    constexpr Matrix(const std::array<std::array<T, N>, M>&& elements)
+    constexpr Matrix(std::array<std::array<T, N>, M>&& elements)
         : elements_{std::move(elements)}
     {}
 

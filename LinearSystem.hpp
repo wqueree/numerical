@@ -23,7 +23,7 @@ public:
     {}
 
 
-    constexpr LinearSystem(const Matrix<T, V, V>&& A, const Matrix<T, V, 1>&& b)
+    constexpr LinearSystem(Matrix<T, V, V>&& A, Matrix<T, V, 1>&& b)
         : A_{std::move(A)}
         , b_{std::move(b)}
     {}
