@@ -1,55 +1,33 @@
 #include <iostream>
 #include "Matrix.hpp"
+#include "LinearSystem.hpp"
 
-int main () {
-    std::array<std::array<double, 3>, 5> am0 {{
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9},
-        {1, 2, 3},
-        {4, 5, 0}
+int main()
+{
+    std::array<std::array<double, 3>, 3> am3 {{
+        {1, 5, 4},
+        {2, 0, 3},
+        {5, 8, 2}
     }};
 
-    Matrix<double, 5, 3> m0 {std::move(am0)};
+    Matrix<double, 3, 3> m3 {std::move(am3)};
 
-    std::array<std::array<double, 3>, 5> am1 {{
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9},
-        {1, 2, 3},
-        {4, 5, 6}
+    std::array<std::array<double, 4>, 4> am4 {{
+        {2, 0, 2, 0.6},
+        {3, 3, 4, -2},
+        {5, 5, 4, 2},
+        {-1, -2, 3.4, -1}
     }};
 
-    Matrix<double, 5, 3> m1 {std::move(am1)};
+    Matrix<double, 4, 4> m4 {std::move(am4)};
 
-    Matrix<double, 2, 2> m;
+    // auto m4s = m4.lup_solve();
 
-    std::array<std::array<double, 4>, 3> am2 {{
-        {1, 2, 3, 4},
-        {5, 6, 7, 8},
-        {9, 1, 2, 3}
-    }};
+    // std::cout << m4s.to_string() << "\n";
+    Matrix<double, 3, 1> b {{12, 9, 5}};
+    auto x = m3.lup_solve(b);
 
-    Matrix<double, 3, 4> m2 {std::move(am2)};
+    std::cout << x.to_string() << "\n";
 
-    // auto m3 = m1 * m2;
-    // std::cout << m3.to_string() << std::endl;
-
-    std::array<std::array<double, 2>, 3> am4 {{
-        {1, 2},
-        {3, 4},
-        {5, 6}
-    }};
-
-    Matrix<double, 3, 2> m4 {std::move(am4)};
-
-    // std::cout << m4.to_string() << std::endl;
-
-    // auto m5 { m4.transpose() };
-
-    m4.permute(std::array<double, 3> {2, 0, 1});
-
-    std::cout << Matrix<double, 3, 3>::identity().to_string() << std::endl;
-    
     return 0;
 }

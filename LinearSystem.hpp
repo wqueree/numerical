@@ -29,4 +29,18 @@ public:
     {}
 
 
+    constexpr std::string to_string() {
+        std::ostringstream result;
+        result << std::fixed << std::setprecision(3);
+        for (size_t i = 0; i < V; ++i) {
+            for (size_t j = 0; j < V; ++j) {
+                auto val = A_(i, j);
+                result << std::scientific << val << " ";
+            }
+            result << "| " << b_(i, 0); 
+            if (i < V - 1)
+                result << "\n";
+        }
+        return result.str();
+    }
 };
