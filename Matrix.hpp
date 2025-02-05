@@ -9,12 +9,16 @@
 #include <numeric>
 #include <iomanip>
 #include <type_traits>
-#include <map>
 #include <iosfwd>
 #include <tuple>
 
-
 template <typename T, std::size_t M, std::size_t N, typename E = typename std::enable_if<std::is_floating_point<T>::value>::type>
+class Matrix;
+
+template <typename T, std::size_t M>
+using Vector = Matrix<T, M, 1>;
+
+template <typename T, std::size_t M, std::size_t N, typename E>
 class Matrix {
 private:
     std::array<std::array<T, N>, M> elements_;
@@ -281,7 +285,7 @@ public:
 
 
     template <typename _T = T, std::size_t _M = M, std::size_t _N = N>
-    constexpr typename enable_if_square<_M, _N, Matrix<_T, _M, 1>>::type lup_solve(Matrix<_T, _M, 1>& b) const {
+    constexpr typename enable_if_square<_M, _N, Vector<_T, _M>>::type lup_solve(Vector<_T, _M>& b) const {
         if (!lup_decomposition_cache_valid_) lup_decompose();
         Matrix<_T, _M, 1> x;
         Matrix<_T, _M, 1> y;
