@@ -11,13 +11,12 @@ int main()
     }};
 
     Matrix<double, 3, 3> m3 {std::move(am3)};
-    // std::cout << m3.determinant() << "\n";
 
     Vector<double, 3UL> b {{12, 9, 5}};
 
     Vector<double, 3UL> x = m3.lup_solve(b);
 
-    // std::cout << x.to_string() << "\n";
+    std::cout << x.to_string() << "\n";
 
     return 0;
 }

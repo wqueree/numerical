@@ -34,4 +34,11 @@
 *.s
 
 .vscode/
+build/
+CMakeFiles/
+.ninja*
+*.ninja
+*.cmake
+CMakeCache.txt
+numerical-algorithms
 scratch.cpp
