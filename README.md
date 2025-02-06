@@ -7,11 +7,7 @@ My work resulting from following Justin Solomon's MIT Course _Numerical Algorith
 ### Build
 
 ```bash
-$ cmake . -G Ninja
-$ ninja
-```
-
-### Run
-```bash
-$ ./numerical-algorithms
+$ cmake -S . -B build
+$ cmake --build build --config Release
+$ sudo cmake --install build --config Release --prefix your/lib/dir
 ```

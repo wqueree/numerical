@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Matrix.hpp"
+#include "matrix.hpp"
 
 
 template<typename T, std::size_t V, typename E = typename std::enable_if<std::is_floating_point<T>::value>::type>
 class LinearSystem {
 private:
-    Matrix<T, V, V> A_;
-    Matrix<T, V, 1> b_;
+    matrix<T, V, V> A_;
+    matrix<T, V, 1> b_;
 
 
 public:
@@ -17,13 +17,13 @@ public:
     {}
 
 
-    constexpr LinearSystem(const Matrix<T, V, V>& A, const Matrix<T, V, 1>& b)
+    constexpr LinearSystem(const matrix<T, V, V>& A, const matrix<T, V, 1>& b)
         : A_{A}
         , b_{b}
     {}
 
 
-    constexpr LinearSystem(Matrix<T, V, V>&& A, Matrix<T, V, 1>&& b)
+    constexpr LinearSystem(matrix<T, V, V>&& A, matrix<T, V, 1>&& b)
         : A_{std::move(A)}
         , b_{std::move(b)}
     {}

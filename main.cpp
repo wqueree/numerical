@@ -1,6 +1,5 @@
 #include <iostream>
-#include "Matrix.hpp"
-#include "LinearSystem.hpp"
+#include <libnumerical/Matrix.hpp>
 
 int main()
 {
